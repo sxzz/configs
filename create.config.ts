@@ -1,5 +1,5 @@
-// import type { Config } from '/Users/kevin/Library/pnpm/global/5/.pnpm/@sxzz+create@0.3.0/node_modules/@sxzz/create/dist/types'
-import type { Config } from '/Users/kevin/Developer/open-source/create/src/types'
+import type { Config } from '/Users/kevin/Library/pnpm/global/5/node_modules/@sxzz/create'
+// import type { Config } from '/Users/kevin/Developer/open-source/create/src/types'
 
 const config: Config = {
   git: {
