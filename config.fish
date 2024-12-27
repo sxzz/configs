@@ -62,6 +62,7 @@ alias grbc="git rebase --continue"
 alias grba="git rebase --abort"
 
 alias gm="git merge"
+alias gma="git merge --abort"
 alias gmm="git merge (get_upstream)/(get_main_branch)"
 
 alias gl="git log"
