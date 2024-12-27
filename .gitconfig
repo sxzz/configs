@@ -39,3 +39,4 @@
 undo = reset --soft HEAD^
 cancel = reset --hard HEAD^
 append = commit -a --amend --no-edit
+df = diff
