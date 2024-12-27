@@ -371,8 +371,6 @@ fish_add_path $GOPATH/bin
 
 # Flutter
 fish_add_path $HOME/Developer/flutter/bin
-set -gx FLUTTER_STORAGE_BASE_URL https://mirrors.tuna.tsinghua.edu.cn/flutter
-set -gx PUB_HOSTED_URL https://mirrors.tuna.tsinghua.edu.cn/dart-pub
 
 # Android
 set -gx ANDROID_HOME $HOME/Android
