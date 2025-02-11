@@ -158,6 +158,7 @@ alias ui="nu -i"
 alias uli="nu --latest -i"
 alias reni="rm -fr node_modules && ni"
 alias nif="ni -f"
+alias ny="pnpm why --exclude-peers -r"
 
 alias re_source="source ~/.config/fish/config.fish"
 
