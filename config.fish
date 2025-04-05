@@ -42,6 +42,7 @@ alias gpl="git pull --rebase"
 alias gcl="git clone"
 alias gst="git stash"
 alias gstp="git stash pop"
+alias cloneo="cd ~/Developer/open-source && git clone"
 
 alias main='git checkout (get_main_branch)'
 alias gcd="git checkout dev"
@@ -55,6 +56,7 @@ alias gfu='git fetch (get_upstream)'
 alias gfa='git fetch --all'
 
 alias grb="git rebase"
+alias grbe="GIT_EDITOR='code -w' git rebase -i"
 alias grbom="git rebase origin/(get_main_branch)"
 alias grbod="git rebase origin/dev"
 alias grbum="grt && git rebase (get_upstream)/(get_main_branch)"
@@ -80,7 +82,7 @@ alias gA="git add -A"
 alias gc="git commit"
 alias gcm="git commit -m"
 alias gca="git commit -a"
-alias gcae="git commit --amend"
+alias gcae="GIT_EDITOR='code -w' git commit --amend"
 alias gcaen="git commit --amend --no-edit -n"
 alias gcn="git commit -n"
 alias gcnn="git commit --no-edit -n"
@@ -261,10 +263,23 @@ function gbp
     and echo $GONE_BRANCHES | xargs git branch -D
 end
 
+# remove all remote except origin and upstream
 function clean_remote
     main
     and git remote | grep -v 'origin\|upstream' | xargs -I REMOTE git remote remove REMOTE
     git remote -v
+end
+
+function move_branch
+    set NEW_BRANCH (string split : -m1 $argv)[-1]
+    if not test $NEW_BRANCH
+        echo "No new branch name"
+        return 1
+    end
+
+    set SHA (git rev-parse HEAD | tr -d \n)
+    and git reset --hard HEAD~1
+    and git checkout -b $NEW_BRANCH $SHA
 end
 
 function select_branch
@@ -343,21 +358,6 @@ function npm_scripts
     jq -r '.scripts | keys[]' <package.json
 end
 
-# proxy
-function proxy
-    set -gx https_proxy http://127.0.0.1:6152
-    set -gx http_proxy http://127.0.0.1:6152
-    set -gx all_proxy socks5://127.0.0.1:6153
-end
-function unproxy
-    set -gu http_proxy
-    set -gu https_proxy
-    set -gu all_proxy
-end
-function ssh_proxy
-    ssh -o ProxyCommand="nc -X 5 -x 127.0.0.1:6152 %h %p" $argv
-end
-
 # Environment Variables
 # fish_add_path /usr/local/sbin
 
@@ -372,7 +372,7 @@ set -gx GOPATH $HOME/go
 fish_add_path $GOPATH/bin
 
 # Flutter
-fish_add_path $HOME/Developer/flutter/bin
+# fish_add_path $HOME/Developer/flutter/bin
 
 # Android
 set -gx ANDROID_HOME $HOME/Android
@@ -420,3 +420,7 @@ fish_add_path /opt/homebrew/opt/ruby/bin
 fish_add_path $HOME/.foundry/bin
 
 zoxide init fish | source
+
+# Added by OrbStack: command-line tools and integration
+# This won't be added again if you remove it.
+source ~/.orbstack/shell/init.fish 2>/dev/null || :
